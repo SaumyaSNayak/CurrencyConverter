@@ -5,5 +5,5 @@ import com.example.currencyconvert.util.Resource
 
 interface MainRepository {
 
-    suspend fun getRates(base: String): Resource<CurrencyResponse>
+    suspend fun getRates(access_key: String): Resource<CurrencyResponse>
 }

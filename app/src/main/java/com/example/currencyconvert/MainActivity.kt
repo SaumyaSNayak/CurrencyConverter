@@ -1,10 +1,12 @@
 package com.example.currencyconvert
 
+import android.R
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,17 +28,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*binding.btnConvert.setOnClickListener {
-            viewModel.convert(
-                binding.etFrom.text.toString(),
-                binding.spFromCurrency.selectedItem.toString(),
-                binding.spToCurrency.selectedItem.toString(),
-            )
-        }*/
+        binding.etTo.text = "1".toEditable()
+        binding.etFrom.text = "1".toEditable()
+        binding.progressBar.isVisible = true
 
-        /*binding.etFrom.setOnFocusChangeListener{ _, focused ->
-
-        }*/
+        viewModel.convert("fdbd7a5216ac1a61363e33afef062144")
 
         binding.etFrom.addTextChangedListener(object : TextWatcher {
 
@@ -46,16 +42,10 @@ class MainActivity : AppCompatActivity() {
                                            count: Int, after: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence, start: Int,
-                                       before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val message = " - from - " + binding.fromCurrency.selectedItem.toString() + " - to - " + binding.toCurrency.selectedItem.toString()
                 if (binding.fromCurrency.selectedItem.toString() != binding.toCurrency.selectedItem.toString()){
                     Toast.makeText(this@MainActivity, "if$message", Toast.LENGTH_SHORT).show()
-                    viewModel.convert(
-                        binding.etFrom.text.toString(),
-                        binding.fromCurrency.selectedItem.toString(),
-                        binding.toCurrency.selectedItem.toString(),
-                    )
                 } else {
                     Toast.makeText(this@MainActivity, "else$message", Toast.LENGTH_SHORT).show()
                 }
@@ -68,12 +58,17 @@ class MainActivity : AppCompatActivity() {
                     is MainViewModel.CurrencyEvent.Success -> {
                         binding.progressBar.isVisible = false
                         binding.etTo.setTextColor(Color.BLACK)
-                        binding.etTo.text = event.resultText.toEditable()
+                        binding.etFrom.setTextColor(Color.BLACK)
+                        if (binding.fromCurrency != null) {
+                            val adapter = ArrayAdapter(this@MainActivity, R.layout.simple_spinner_item, event.rates.toList())
+                            binding.fromCurrency.adapter = adapter
+                        }
                     }
                     is MainViewModel.CurrencyEvent.Failure -> {
                         binding.progressBar.isVisible = false
                         binding.etTo.setTextColor(Color.RED)
-                        binding.etTo.text = event.errorText.toEditable()
+                        binding.etFrom.setTextColor(Color.RED)
+                        Toast.makeText(this@MainActivity, event.errorText, Toast.LENGTH_SHORT).show()
                     }
                     is MainViewModel.CurrencyEvent.Loading -> {
                         binding.progressBar.isVisible = true
