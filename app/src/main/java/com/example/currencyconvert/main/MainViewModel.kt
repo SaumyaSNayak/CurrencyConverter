@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconvert.util.DispatcherProvider
 import com.example.currencyconvert.util.Resource
+import com.google.gson.JsonObject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class MainViewModel @ViewModelInject constructor(
 ): ViewModel() {
 
     sealed class CurrencyEvent {
-        class Success(val rates: Set<String>): CurrencyEvent()
+        class Success(val currencies: Set<String>, val rates: JsonObject): CurrencyEvent()
         class Failure(val errorText: String): CurrencyEvent()
         object Loading : CurrencyEvent()
         object Empty : CurrencyEvent()
@@ -31,11 +32,12 @@ class MainViewModel @ViewModelInject constructor(
             when(val ratesResponse = repository.getRates(access_key)) {
                 is Resource.Error -> _conversion.value = CurrencyEvent.Failure(ratesResponse.message!!)
                 is Resource.Success -> {
-                    val rates: Set<String> = ratesResponse.data!!.rates.keySet()
-                    if(rates.isEmpty()) {
+                    val currencies: Set<String> = ratesResponse.data!!.rates.keySet()
+                    val rates: JsonObject = ratesResponse.data!!.rates
+                    if(currencies.isEmpty()) {
                         _conversion.value = CurrencyEvent.Failure("Unexpected error")
                     } else {
-                        _conversion.value = CurrencyEvent.Success(rates)
+                        _conversion.value = CurrencyEvent.Success(currencies, rates)
                     }
                 }
             }

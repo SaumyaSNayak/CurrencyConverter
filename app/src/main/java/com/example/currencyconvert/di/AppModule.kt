@@ -1,4 +1,4 @@
-package com.example.currencyconvert
+package com.example.currencyconvert.di
 
 import com.example.currencyconvert.data.CurrencyApi
 import com.example.currencyconvert.main.DefaultMainRepository
@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-private const val BASE_URL = "http://data.fixer.io/api/"
+private const val BASE_URL = "http://data.fixer.io/"
 
 @Module
 @InstallIn(ApplicationComponent::class)

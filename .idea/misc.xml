@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/Users/saumya.nayak/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.358695652173913" />
         <entry key="..\:/Users/saumya.nayak/OneDrive - Xebia Nederland B.V/Desktop/Projects/CurrencyConvert/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="app/src/main/res/layout/activity_historical.xml" value="0.22509057971014493" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12916666666666668" />
+        <entry key="app/src/main/res/xml/security_policies.xml" value="0.22509057971014493" />
       </map>
     </option>
   </component>

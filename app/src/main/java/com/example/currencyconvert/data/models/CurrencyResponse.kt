@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 
 data class CurrencyResponse(
-    val base: String,
-    val date: String,
+    @SerializedName("rates")
     val rates: JsonObject
 )

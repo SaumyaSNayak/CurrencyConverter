@@ -131,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:hint="1">
+            android:hint="Amount">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFrom"
                 android:layout_width="match_parent"
@@ -150,7 +150,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:hint="1">
+            android:hint="Amount">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etTo"
                 android:layout_width="match_parent"
